@@ -1,5 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './components/BomDia'
+import { BoaTarde, BoaNoite } from './components/Multiplos'
 
-ReactDOM.render(<App nome="Rian" />, document.getElementById('root'))
+ReactDOM.render(
+    <>
+        <BoaTarde nome="Rian" />
+        <BoaNoite nome="Teste" />
+    </>
+, document.getElementById('root'))
