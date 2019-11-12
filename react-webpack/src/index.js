@@ -8,6 +8,6 @@ import Title from './app'
 console.log('webpack is running!')
 
 render(
-    React.createElement(Title),
+    <Title />,
     document.querySelector('[data-js="app"]')
 )
