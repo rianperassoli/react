@@ -85,7 +85,6 @@ export default class Calculator extends Component {
             values[i] = newValue
 
             this.setState({ values })
-            console.log(values)
         }
     }
 
