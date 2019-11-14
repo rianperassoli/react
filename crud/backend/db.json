@@ -1,14 +1,19 @@
 {
-    "users": [
-        {
-            "id": 1,
-            "name": "Rian Perassoli",
-            "email": "rian.perassoli@gmail.com"
-        },
-        {
-            "id": 2,
-            "name": "Felipe Royer",
-            "email": "felipe.royer@gmail.com"
-        }
-    ]
+  "users": [
+    {
+      "id": 1,
+      "name": "Rian Perassoli",
+      "email": "rian.perassoli@gmail.com"
+    },
+    {
+      "id": 2,
+      "name": "Felipe Royer",
+      "email": "felipe.royer@gmail.com"
+    },
+    {
+      "name": "Ana Silva",
+      "email": "anasilva@negocio.com",
+      "id": 3
+    }
+  ]
 }
