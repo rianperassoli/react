@@ -2,7 +2,7 @@
   "users": [
     {
       "id": 1,
-      "name": "Rian Perassoli",
+      "name": "Rian Perassoli teste",
       "email": "rian.perassoli@gmail.com"
     },
     {
@@ -12,7 +12,7 @@
     },
     {
       "name": "Ana Silva",
-      "email": "anasilva@negocio.com",
+      "email": "ana.silva@gmail.com",
       "id": 3
     }
   ]
