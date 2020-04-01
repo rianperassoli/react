@@ -1,10 +1,13 @@
-import React from 'react'
-import Header from './Header'
+import React, { Fragment } from 'react';
+import Header from './Header';
 
-const NotFound = () =>
-    <>
-        <Header />
-        <h1>NotFound</h1>
-    </>
+const NotFound = () =>{
 
-export default NotFound
+    return (
+        <Fragment>
+            <Header />
+            <h1>Página Não Encontrada</h1>
+        </Fragment>
+    );
+}
+export default NotFound;

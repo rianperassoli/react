@@ -1,5 +1,5 @@
 {
-  "name": "react-0",
+  "name": "curso-react-alura",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -7,7 +7,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "3.0.1",
+    "react-scripts": "3.0.0",
     "validator": "^10.11.0"
   },
   "scripts": {

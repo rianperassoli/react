@@ -1,10 +1,13 @@
-import React from 'react'
-import Header from './Header'
+import React, { Fragment } from 'react';
+import Header from './Header';
 
-const Sobre = () =>
-    <>
-        <Header />
-        <h1>Sobre</h1>
-    </>
+const Sobre = () =>{
 
-export default Sobre
+    return (
+        <Fragment>
+            <Header />
+            <h1>Sobre</h1>
+        </Fragment>
+    );
+}
+export default Sobre;

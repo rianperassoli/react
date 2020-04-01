@@ -1,26 +1,42 @@
-import React from 'react'
-import Header from './Header'
-import DataTable from './DataTable'
+import React, { Component, Fragment } from 'react';
+import Header from './Header';
+import DataTable from './DataTable';
+import ApiService from './ApiService';
+import PopUp from './PopUp';
+class Livros extends Component {
 
-const livros = [
-    { nome: 'teste 1', livro: 'livro 1', preco: 10 },
-    { nome: 'teste 2', livro: 'livro 2', preco: 18 },
-    { nome: 'teste 3', livro: 'livro 3', preco: 35 },
-    { nome: 'teste 4', livro: 'livro 4', preco: 40 },
-]
+    constructor(props) {
+        super(props);
 
-const Livros = () => {
-    return (
-        <>
-            < Header />
+        this.state = {
+            livros: [],
+            titulo: 'Livros'
+        };
+    }
 
-            <div className='container'>
-                <h1>Página de livros</h1>
-                <DataTable dados={livros} titulo='Livros' colunas={['livro']} />
-            </div>
-        </>
-    )
+    componentDidMount(){
+        ApiService.ListaLivros()
+                    .then(res => {
+                        if(res.message === 'success'){
+                            PopUp.exibeMensagem('success', 'Livros listados com sucesso');
+                            this.setState({livros : [...this.state.livros, ...res.data]});
+
+                        }
+                    })
+                    .catch(err => PopUp.exibeMensagem('error', 'Falha na comunicação com a API ao listar os livros'));
+    }
+
+    render() {
+        return (
+            <Fragment>
+                <Header />
+                <div className='container'>
+                    <h1>Página de Livros</h1>
+                    <DataTable dados={this.state.livros} titulo={this.state.titulo} colunas={['livro']} />
+                </div>
+            </Fragment>
+        );
+    }
+
 }
-
-
-export default Livros
+export default Livros;

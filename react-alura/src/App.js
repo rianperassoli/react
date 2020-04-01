@@ -1,48 +1,80 @@
-import React, { useState } from 'react';
-import 'materialize-css/dist/css/materialize.min.css'
-import './App.css'
-import Header from './Header'
-import Tabela from './Tabela'
-import Formulario from './Formulario'
+import React, { Component, Fragment } from 'react';
+import 'materialize-css/dist/css/materialize.min.css';
+import './App.css';
+import Header from './Header';
+import Tabela from './Tabela';
+import Form from './Formulario';
 import PopUp from './PopUp';
+import ApiService from './ApiService';
 
+class App extends Component {
 
+  constructor(props){
+    super(props);
 
-function App() {
-  const [autores, setAutores] = useState([
-    { nome: 'teste 1', livro: 'livro 1', preco: 10 },
-    { nome: 'teste 2', livro: 'livro 2', preco: 18 },
-    { nome: 'teste 3', livro: 'livro 3', preco: 35 },
-    { nome: 'teste 4', livro: 'livro 4', preco: 40 },
-  ])
+    this.state = {
+      autores: [],
+    };
+  }
+  
+  removeAutor = id => {
 
+    const { autores } = this.state;
 
-  const removeAutor = (index) => {
-    const listaAutores = autores.filter((autor, posAtual) => {
-      return posAtual !== index
-    })
+    const autoresAtualizado = autores.filter(autor => {
+        return autor.id !== id;
+    });
+    ApiService.RemoveAutor(id)
+              .then(res =>{
+                if(res.message === 'deleted'){
+                  this.setState({autores : [...autoresAtualizado]})
+                  PopUp.exibeMensagem("error", "Autor removido com sucesso");
+                }
+              })
+              .catch(err => PopUp.exibeMensagem("error", "Erro na comunicação com a API ao tentar remover o autor"));
+    
+  }
 
-    setAutores(listaAutores)
-    PopUp.exibeMensagem('error', 'Autor removido com sucesso')
+  escutadorDeSubmit = autor => {
+    ApiService.CriaAutor(JSON.stringify(autor))
+              .then(res =>{  
+                if(res.message === 'success'){
+                  this.setState({ autores:[...this.state.autores, res.data] });
+                  PopUp.exibeMensagem("success", "Autor adicionado com sucesso");
+                }
+                
+              })
+              .catch(err => PopUp.exibeMensagem("error", "Erro na comunicação com a API ao tentar criar o autor"));
+
+    
   }
 
 
-  const handlerSubmit = (autor) => {
-    setAutores([...autores, autor])
-    PopUp.exibeMensagem('success', 'Autor adicionado com sucesso')
+  componentDidMount(){
+    ApiService.ListaAutores()
+                .then(res => {
+                  if(res.message === 'success'){
+                    this.setState({autores : [...this.state.autores, ...res.data]})
+                  }
+                  
+                })
+                .catch(err => PopUp.exibeMensagem("error", "Erro na comunicação com a API ao tentar listar os autores"));
   }
 
-  return (
-    <>
-      <Header />
+  render() {
 
-      <div className='container mb-10'>
-        <Tabela autores={autores} removeAutor={removeAutor} />
+    return (
+      <Fragment>
+        <Header />
+        <div className="container mb-10">
+        <h1>Casa do Código</h1>
+        <Tabela autores={this.state.autores} removeAutor={this.removeAutor} />
+        <Form escutadorDeSubmit={this.escutadorDeSubmit}/>
+        </div>
+      </Fragment>
+    );
+  }
 
-        <Formulario handlerSubmit={handlerSubmit} />
-      </div>
-    </>
-  );
 }
 
 export default App;

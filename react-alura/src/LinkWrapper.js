@@ -1,8 +1,10 @@
-import React from 'react'
+import React from 'react';
 
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
 
-const LinkWrapper = (props) =>
-    <NavLink activeStyle={{ fontWeight: 'bold' }} {...props} />
-
-export default LinkWrapper
+const LinkWrapper = props =>{
+    return (
+        <NavLink activeStyle={{fontWeight: "bold"}} {...props}/>
+    );
+}
+export default LinkWrapper;
