@@ -14,8 +14,17 @@ const Container = styled.div`
 const App = () => {
 
   const [boardItems, setBoardItems] = useState(InitialData)
+  const [homeIndex, setHomeIndex] = useState(null)
+
+  const onDragStart = (start) => {
+    const homeIndex = boardItems.columnOrder.indexOf(start.source.droppableId)
+
+    setHomeIndex(homeIndex)
+  }
 
   const onDragEnd = (result) => {
+    setHomeIndex(null)
+
     const { destination, source, draggableId } = result
 
     if (!destination) {
@@ -60,14 +69,25 @@ const App = () => {
   }
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
+    <DragDropContext
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+    >
       <Container>
         {
-          boardItems.columnOrder.map(columnId => {
+          boardItems.columnOrder.map((columnId, index) => {
             const column = boardItems.columns[columnId]
             const tasks = column.taskIds.map(taskId => boardItems.tasks[taskId])
 
-            return <Column key={column.id} column={column} tasks={tasks} />
+            const isDropDisabled = index < homeIndex
+
+            return (
+              <Column
+                key={column.id}
+                column={column}
+                tasks={tasks}
+                isDropDisabled={isDropDisabled} />
+            )
           })
         }
       </Container>
