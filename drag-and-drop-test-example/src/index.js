@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
+import { DragDropContext } from 'react-beautiful-dnd'
 import '@atlaskit/css-reset'
 
 import InitialData from './initial-data'
@@ -9,13 +10,21 @@ const App = () => {
 
   const [boardItems] = useState(InitialData)
 
-  return (
-    boardItems.columnOrder.map(columnId => {
-      const column = boardItems.columns[columnId]
-      const tasks = column.taskIds.map(taskId => boardItems.tasks[taskId])
+  const onDragEnd = (result) => {
+    console.log(result)
+  }
 
-      return <Column key={column.id} column={column} tasks={tasks} />
-    })
+  return (
+    <DragDropContext onDragEnd={onDragEnd}>
+      {
+        boardItems.columnOrder.map(columnId => {
+          const column = boardItems.columns[columnId]
+          const tasks = column.taskIds.map(taskId => boardItems.tasks[taskId])
+
+          return <Column key={column.id} column={column} tasks={tasks} />
+        })
+      }
+    </DragDropContext>
   )
 }
 
