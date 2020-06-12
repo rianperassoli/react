@@ -8,10 +8,29 @@ import Column from './column'
 
 const App = () => {
 
-  const [boardItems] = useState(InitialData)
+  const [boardItems, setBoardItems] = useState(InitialData)
 
   const onDragEnd = (result) => {
-    console.log(result)
+    const { destination, source, draggableId } = result
+
+    if (!destination) {
+      return
+    }
+    if ((destination.droppableId === source.droppableId) && (destination.index === source.index)) {
+      return
+    }
+
+    const column = boardItems.columns[source.droppableId]
+    const newTasksIds = Array.from(column.taskIds)
+    newTasksIds.splice(source.index, 1)
+    newTasksIds.splice(destination.index, 0, draggableId)
+
+    const newColumn = {
+      ...column,
+      taskIds: newTasksIds
+    }
+
+    setBoardItems({ ...boardItems, columns: { ...boardItems.columns, [newColumn.id]: newColumn } })
   }
 
   return (
