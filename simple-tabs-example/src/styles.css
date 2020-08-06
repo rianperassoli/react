@@ -31,7 +31,6 @@ body {
 
 .tabs .tabs__list .tabs__tab-link--active {
   color: #052843;
-  font-weight: bold;
   border: 1px solid;
   border-bottom: 4px solid transparent;
   border-color: #e0e0e0;
